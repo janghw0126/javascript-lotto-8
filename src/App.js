@@ -36,8 +36,9 @@ class App {
 
     const winningNumbers = await this.readWinningNumbers();
     const bonusNumber = await this.readbonusNumber(winningNumbers);
-    const totalPrize = this.calculateWinningResult(lottos,winningNumbers,bonusNumber);
-
+    
+    const result = this.calculateWinningResult(lottos, winningNumbers, bonusNumber);
+    const totalPrize = this.printWinningResult(result); 
     this.calculateProfit(purchaseAmount, totalPrize);
     
   }
@@ -169,6 +170,11 @@ class App {
       else if (matchCount === 3) result[3]++;
     }
 
+    return result;
+  }
+
+  // 당첨 결과 출력
+  printWinningResult(result){
     Console.print("\n당첨 통계\n---");
 
     let totalPrize = 0;
