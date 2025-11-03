@@ -7,7 +7,7 @@ class App {
     const lottos = this.LottoGenerator(purchaseAmount);
 
     const winningNumbers = await this.readWinningNumbers();
-    const bonusNumber = await this.readbonusNumber();
+    const bonusNumber = await this.readbonusNumber(winningNumbers);
     this.calculateWinningResult(lottos,winningNumbers,bonusNumber);
   }
 
@@ -87,11 +87,11 @@ class App {
     return winningNumbers;
   }
 
-  async readbonusNumber(){
+  async readbonusNumber(winningNumbers){
     while(true){
       try{
         const input3 = await Console.readLineAsync("보너스 번호를 입력해 주세요.");
-        const bonusNumber = this.validateBonusNumber(input3);
+        const bonusNumber = this.validateBonusNumber(input3, winningNumbers);
         return bonusNumber;
       }
       catch(error){
@@ -100,8 +100,8 @@ class App {
     }
   }
 
-  validateBonusNumber(input3){
-    if (/[^0-9,]/.test(input)) throw new Error("[ERROR] 숫자가 아닌 문자를 입력하였습니다.");
+  validateBonusNumber(input3, winningNumbers){
+    if (/[^0-9,]/.test(input3)) throw new Error("[ERROR] 숫자가 아닌 문자를 입력하였습니다.");
 
     const bonusNumber = Number(input3);
     if (bonusNumber < 1 || bonusNumber > 45)  throw new Error("[ERROR] 숫자가 1~45 범위를 벗어났습니다.");
