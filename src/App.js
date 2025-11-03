@@ -159,7 +159,7 @@ class App {
   }
 
   calculateProfit(purchaseAmount, totalPrize) {
-    const profitRate = ((totalPrize / purchaseAmount) * 100).toFixed(2);
+    const profitRate = ((totalPrize / purchaseAmount) * 100).toFixed(1);
     Console.print(`총 수익률은 ${profitRate}%입니다.`);
   }
 
