@@ -6,8 +6,18 @@ class App {
     while(true){
       try{
          const input = await Console.readLineAsync( "구입금액을 입력해 주세요.\n");
+         Console.print("");
+
          const purchaseAmount = this.validatePurchaseAmount(input);
          const lottos = this.LottoGenerator(purchaseAmount);
+         Console.print("");
+
+         const input2 = await Console.readLineAsync( "당첨 번호를 입력해 주세요.\n");
+         const winningNumbers = this.validateWinningNumbers(input2);
+
+
+
+
       }catch(error){
         Console.print(error.message);
       }
@@ -39,6 +49,25 @@ class App {
 
     return lottos;
 
+  }
+
+  validateWinningNumbers(input2){
+    if(input2=="") throw new Error("[ERROR] 빈 값을 입력하였습니다.");
+    if(!input2.includes(",")) throw new Error("[ERROR] 쉼표를 기준으로 구분하지 않았습니다.");
+    if(/[^0-9,]/.test(input2)) throw new Error("[ERROR] 숫자가 아닌 문자를 입력하였습니다.");
+
+    const winningNumbers = input2.split(",").map(Number);
+
+    if(winningNumbers.length !== 6) 
+      throw new Error("[ERROR] 6개 미만 또는 초과 입력하였습니다.");
+
+    if (winningNumbers.some((num) => num < 1 || num > 45))
+      throw new Error("[ERROR] 숫자가 1~45 범위를 벗어났습니다.");
+
+    if (winningNumbers.some((num) => winningNumbers.indexOf(num) !== winningNumbers.lastIndexOf(num)))
+      throw new Error("[ERROR] 중복된 숫자가 포함되어 있습니다.");
+
+    return winningNumbers;
   }
 }
 
