@@ -1,4 +1,5 @@
 import App from "../src/App";
+import Validator from "../src/utils/Validator.js";
 
 describe("로또 유효성 검증 테스트", () => {
   const app = new App();
@@ -27,11 +28,11 @@ describe("로또 유효성 검증 테스트", () => {
         "[ERROR] 빈 값을 입력하였습니다.",
       ],
     ])("%s 예외 발생", (_, input, expectedMessage) => {
-      expect(() => app.validatePurchaseAmount(input)).toThrow(expectedMessage);
+      expect(() => Validator.validatePurchaseAmount(input)).toThrow(expectedMessage);
     });
 
     test("정상 입력 시 숫자로 반환된다.", () => {
-      expect(app.validatePurchaseAmount("8000")).toBe(8000);
+      expect(Validator.validatePurchaseAmount("8000")).toBe(8000);
     });
   });
 
@@ -74,11 +75,11 @@ describe("로또 유효성 검증 테스트", () => {
         "[ERROR] 6개 미만 또는 초과 입력하였습니다.",
       ],
     ])("%s 예외 발생", (_, input, expectedMessage) => {
-      expect(() => app.validateWinningNumbers(input)).toThrow(expectedMessage);
+      expect(() => Validator.validateWinningNumbers(input)).toThrow(expectedMessage);
     });
 
     test("정상 입력 시 배열 반환", () => {
-      expect(app.validateWinningNumbers("1,2,3,4,5,6")).toEqual([1, 2, 3, 4, 5, 6]);
+       expect(Validator.validateWinningNumbers("1,2,3,4,5,6")).toEqual([1, 2, 3, 4, 5, 6]);
     });
   });
 
@@ -103,11 +104,11 @@ describe("로또 유효성 검증 테스트", () => {
         "[ERROR] 당첨 번호와 중복되었습니다.",
       ],
     ])("%s 예외 발생", (_, input, expectedMessage) => {
-      expect(() => app.validateBonusNumber(input, winningNumbers)).toThrow(expectedMessage);
+      expect(() => Validator.validateBonusNumber(input, winningNumbers)).toThrow(expectedMessage);
     });
 
     test("정상 입력 시 숫자로 반환된다.", () => {
-      expect(app.validateBonusNumber("7", winningNumbers)).toBe(7);
+      expect(Validator.validateBonusNumber("7", winningNumbers)).toBe(7);
     });
   });
 });
