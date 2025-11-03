@@ -8,7 +8,9 @@ class App {
 
     const winningNumbers = await this.readWinningNumbers();
     const bonusNumber = await this.readbonusNumber(winningNumbers);
-    this.calculateWinningResult(lottos,winningNumbers,bonusNumber);
+    const totalPrize = this.calculateWinningResult(lottos,winningNumbers,bonusNumber);
+
+    this.calculateProfit(purchaseAmount, totalPrize);
   }
 
 
@@ -154,6 +156,12 @@ class App {
 
     return totalPrize; // 이걸 이용해서 수익률 계산 함수로 넘길 수 있음
   }
+
+  calculateProfit(purchaseAmount, totalPrize) {
+    const profitRate = ((totalPrize / purchaseAmount) * 100).toFixed(2);
+    Console.print(`\n총 수익률은 ${profitRate}%입니다.`);
+  }
+
 }
 
 
