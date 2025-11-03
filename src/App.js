@@ -7,7 +7,6 @@ class App {
     const lottos = this.LottoGenerator(purchaseAmount);
 
     const winningNumbers = await this.readWinningNumbers();
-      
   }
 
 
@@ -84,6 +83,31 @@ class App {
       throw new Error("[ERROR] 중복된 숫자가 포함되어 있습니다.");
 
     return winningNumbers;
+  }
+
+  async readbonusNumber(){
+    while(true){
+      try{
+        const input3 = await Console.readLineAsync("보너스 번호를 입력해 주세요.");
+        const bonusNumber = this.validateBonusNumber(input3);
+        return bonusNumber;
+      }
+      catch(error){
+        Console.print(error.message);
+      }
+    }
+  }
+
+  validateBonusNumber(input3){
+    if (/[^0-9,]/.test(input)) throw new Error("[ERROR] 숫자가 아닌 문자를 입력하였습니다.");
+
+    const bonusNumber = Number(input3);
+    if (bonusNumber < 1 || bonusNumber > 45)  throw new Error("[ERROR] 숫자가 1~45 범위를 벗어났습니다.");
+    if (winningNumbers.forEach((num)=> num=== Number(bonusNumber)))
+      throw new Error("[ERROR] 당첨 번호와 중복되었습니다.");
+    
+    return bonusNumber;
+
   }
 }
 
