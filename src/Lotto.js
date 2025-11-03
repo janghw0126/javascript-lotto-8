@@ -14,7 +14,7 @@ class Lotto {
   
   // 로또 번호 배열을 문자열 형태로 표현
   toString(){
-    return `[${this.numbers.join(", ")}]`;
+    return `[${this.#numbers.join(", ")}]`;
   }
 }
 
