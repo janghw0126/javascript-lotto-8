@@ -54,6 +54,8 @@
 - [x] 보너스 번호(readbonusNumber) 입력
 
 ✅ 유효성 검증
+모든 입력 단계는 while(true)와 try/catch 문으로 감싸며,
+예외 발생 시 [ERROR] 메시지를 출력하고 해당 단계부터 다시 입력을 받는다.
 
 - [x] 로또 구입 금액에 대한 유효성 검증(validatePurchaseAmount)
 
@@ -89,48 +91,46 @@
 
 ✅ 실행 로직
 
-- [x] 로또 발행(LottoGenerator)
+- [x] 로또 발행(generateLottos)
 
-  - [x] 구입 금액에 따라 로또 개수(lottoCount) 계산
-  - [x] 로또 번호를 저장할 배열(lottos) 생성
+  - [x] 구입 금액에 따라 로또 개수 계산
+  - [x] 로또 번호를 저장할 배열 생성
   - [x] 로또 개수만큼 반복하며 번호 생성
     - [x] 1~45 사이의 중복없는 숫자를 6개를 생성
     - [x] 번호 오름차순으로 정렬
     - [x] Lotto 인스턴스 생성하여 유효성 검증
-    - [x] lottos에 생성된 번호 추가
+    - [x] lottos 배열에 생성된 번호 추가
 
 - [x] 수익률 계산(calculateProfit)
 
-  - [x] 각 등수별 당첨 금액과 일치한 횟수 곱함(totalPrize)
-  - [x] (totalPrize / purchaseAmount) \* 100 하여 수익률 계산
-  - [x] 수익률의 소수점 둘째 자리에서 반올림
-  - [x] 수익률 출력
+  - [x] (총 상금 / purchaseAmount) \* 100으로 수익률 계산
+  - [x] toFixed(1)로 소수점 첫째 자리까지 반올림
 
 ✅ 출력
 
-- [x] 발행된 로또 개수(lottoCount)와 번호를 한 줄씩 출력
-- [x] 당첨 결과 통계 출력(calculateWinningResult)
-- [x] 수익률 출력 (calculateProfit)
+- [x] 구매한 로또 개수(lottos.length) 및 번호 출력 (printLottos)
+- [x] 등수별 당첨 통계 및 상금 출력 (printResult)
+- [x] 총 수익률 출력 (printResult 내부)
 
 ---
 
 ## 프로그래밍 흐름
 
-1.  로또 구입 금액(purchaseAmount)을 입력받는다.
+1.  로또 구입 금액을 입력받는다.(InputView.readPurchaseAmount)
 
-2.  로또 구입 금액에 대한 유효성 검증(validatePurchaseAmount)을 한다.
+2.  로또 구입 금액에 대한 유효성 검증을 한다.(Validator.validatePurchaseAmount)
     2-1. 1000원 단위로 입력 받지 않은 경우 [ERROR] 처리 후 재시도
 
     2-2. 숫자가 아닌 문자로 입력받았을 경우 [ERROR] 처리 후 재시도
 
     2-3. 0 이하인 경우 [ERROR] 처리 후 재시도
 
-3.  발행한 로또 수량만큼 로또를 발행한다.(LottoGenerator)
-    3-1. 로또 발행 개수(lottoCount)를 계산한다.
+3.  발행한 로또 수량만큼 로또를 발행한다.(App.generateLottos)
+    3-1. 로또 발행 개수를 계산한다.
 
-        3-1-1. 로또 구입 금액(purchaseAmount) / 1000으로 계산한다.
+        3-1-1. 로또 구입 금액 / 1000으로 계산한다.
 
-    3-2. 로또 번호를 담을 배열(lottos)을 선언한다.
+    3-2. 로또 번호를 담을 배열을 선언한다.
 
     3-3. 로또 발행 개수만큼 반복하면서 로또를 발행한다.
 
@@ -140,11 +140,11 @@
 
         3-3-3. 번호를 오름차순으로 정렬한다.
 
-4.  발행한 로또 수량(lottoCount)과 로또 번호 목록(lottos)를 출력한다.
+4.  발행한 로또 수량과 로또 번호 목록를 출력한다.(OutputView.printLottos)
 
-5.  당첨 번호(winningNumbers)를 입력받는다.
+5.  당첨 번호를 입력받는다.(InputView.readWinningNumbers)
 
-6.  당첨 번호에 대한 유효성 검증(validateWinningNumbers)을 한다.
+6.  당첨 번호에 대한 유효성 검증을 한다.(Validator.validateWinningNumbers, App.getWinningNumbers)
     6-1. 쉼표를 기준으로 구분하지 않은 경우 [ERROR] 처리 후 재시도
 
     6-2. 숫자가 아닌 문자로 입력받았을 경우 [ERROR] 처리 후 재시도
@@ -157,35 +157,37 @@
 
     6-6. 6개 미만 또는 초과 입력 시 [ERROR] 처리 후 재시도
 
-7.  보너스 번호(bonusNumber)를 입력받는다.
+7.  보너스 번호를 입력받는다.(InputView.readBonusNumber)
 
-8.  보너스 번호에 대한 유효성 검증(validateBonusNumber)을 한다.
+8.  보너스 번호에 대한 유효성 검증을 한다.(Validator.validateBonusNumber, App.getBonusNumber)
     8-1. 숫자가 아닌 문자로 입력받았을 경우 [ERROR] 처리 후 재시도
 
     8-2. 숫자가 1~45 이외인 경우 [ERROR] 처리 후 재시도
 
     8-3. 당첨 번호와 중복될 경우 [ERROR] 처리 후 재시도
 
-9.  당첨 결과를 계산한다.(calculateWinningResult)
+9.  당첨 결과를 계산한다.(App.calculateWinningResult)
 
     9-1. 발행한 로또 수량만큼 반복한다.
 
-        9-1-1. 로또 번호 배열(lottos)과 당첨 번호(winningNumbers)를 비교한다.
+        9-1-1. 로또 번호 배열과 당첨 번호를 비교한다.
 
-        9-1-2. 일치한 개수를 계산하고, 보너스 번호(bonusNumber) 일치 여부를 판단한다.
+        9-1-2. 일치한 개수를 계산하고, 보너스 번호 일치 여부를 판단한다.
 
         9-1-3. 일치 개수를 확인하며 등수별 당첨 횟수를 누적한다.
 
-    9-2. 당첨 결과 통계를 출력한다.
+    9-2. 등수별 당첨 횟수를 누적하고 총 상금을 계산한다.(App.calculateTotalPrize)
 
-10. 수익률을 계산한다.(calculateProfit)
-    10-1. 각 등수별 당첨 금액과 일치한 횟수를 곱한다.(totalPrize)
+    9-3. 총 수익률을 계산하고 최종 결과를 출력한다.(OutputView.printResult)
 
-    10-2. (totalPrize / purchaseAmount) \* 100을 하여 수익률을 계산한다.
+10. 수익률을 계산한다.(App.calculateTotalPrize)
+    10-1. 각 등수별 당첨 금액과 일치한 횟수를 곱한다.
 
-    10-3. 수익률의 소수점 둘째 자리까지 반올림한다.
+    10-2. (총 상금 / 로또 구입 금액) × 100 으로 수익률을 계산한다.
 
-    10-4. 수익률을 출력한다.
+    10-3. 수익률을 소수점 첫째 자리까지 반올림한다. (toFixed(1))
+
+    10-4. 수익률을 출력한다.(OutputView.printResult)
 
 ---
 
@@ -197,13 +199,13 @@
 | └── LottoTest.js
 ├── src/
 │ ├── App.js
-│ ├── Lotto.js
+│ ├── Lotto.js # 로또 객체 정의 및 유효성 검증 로직
 │ ├── utils/
-│ │ ├── Validator.js
-│ │ └── constants.js
+│ │ ├── Validator.js # 입력값 유효성 검증 로직
+│ │ └── constants.js # 상수 및 에러 메시지 관리
 │ ├── view/
-│ │ ├── InputView.js
-│ │ └── OutputView.js
+│ │ ├── InputView.js # 사용자 입력
+│ │ └── OutputView.js # 결과 출력
 │ └── index.js
 └── README.md
 
@@ -240,3 +242,9 @@
   - [x] 숫자가 1~45 이외인 경우
 
   - [x] 당첨 번호와 중복될 경우
+
+- [x] 당첨 결과 계산(calculateWinningResult)
+
+- [x] 총 상금 계산 및 수익률 계산(calculateTotalPrize)
+
+- [x] 출력 형식 검증(OutputView.printResult)
