@@ -1,8 +1,7 @@
-import { Console } from "@woowacourse/mission-utils";
-import { MESSAGE } from "../utils/constants.js";
+import { Console } from '@woowacourse/mission-utils';
+import { MESSAGE } from '../utils/constants.js';
 
 const InputView = {
-
   // 구입 금액 입력
   async readPurchaseAmount() {
     return await Console.readLineAsync(MESSAGE.INPUT_PURCHASE);

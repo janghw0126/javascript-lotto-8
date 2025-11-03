@@ -1,20 +1,20 @@
-import { Console } from "@woowacourse/mission-utils";
-import { PRIZE, RANK_MAP} from "../utils/constants.js";
+import { Console } from '@woowacourse/mission-utils';
+import { PRIZE, RANK_MAP } from '../utils/constants.js';
 
 const OutputView = {
   // 구매한 로또 목록 출력
   printLottos(lottos) {
     Console.print(`${lottos.length}개를 구매했습니다.`);
     lottos.forEach((lotto) => Console.print(lotto.toString()));
-    Console.print("");
+    Console.print('');
   },
 
   // 당첨 통계 및 수익률 출력
   printResult(result, profitRate) {
-    Console.print("\n당첨 통계\n---");
+    Console.print('\n당첨 통계\n---');
 
     // 등수별 결과 출력
-    for (const key in result)  {
+    for (const key in result) {
       const prize = PRIZE[key].toLocaleString();
       const count = result[key];
       Console.print(`${RANK_MAP[key]} (${prize}원) - ${count}개`);

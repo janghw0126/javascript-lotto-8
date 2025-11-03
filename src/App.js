@@ -1,9 +1,15 @@
-import { Random, Console } from "@woowacourse/mission-utils";
-import Lotto from "./Lotto.js";
-import Validator from "./utils/Validator.js";
-import InputView from "./view/InputView.js";
-import OutputView from "./view/OutputView.js";
-import { LOTTO_MIN_NUMBER, LOTTO_MAX_NUMBER, LOTTO_NUMBER_COUNT, LOTTO_PRICE, PRIZE } from "./utils/constants.js";
+import { Random, Console } from '@woowacourse/mission-utils';
+import Lotto from './Lotto.js';
+import Validator from './utils/Validator.js';
+import InputView from './view/InputView.js';
+import OutputView from './view/OutputView.js';
+import {
+  LOTTO_MIN_NUMBER,
+  LOTTO_MAX_NUMBER,
+  LOTTO_NUMBER_COUNT,
+  LOTTO_PRICE,
+  PRIZE,
+} from './utils/constants.js';
 
 class App {
   async run() {
@@ -15,7 +21,11 @@ class App {
     const winningNumbers = await this.getWinningNumbers();
     const bonusNumber = await this.getBonusNumber(winningNumbers);
 
-    const result = this.calculateWinningResult(lottos, winningNumbers, bonusNumber);
+    const result = this.calculateWinningResult(
+      lottos,
+      winningNumbers,
+      bonusNumber
+    );
 
     const totalPrize = this.calculateTotalPrize(result);
     const profitRate = ((totalPrize / purchaseAmount) * 100).toFixed(1);
@@ -65,7 +75,9 @@ class App {
     const lottos = [];
     for (let i = 0; i < count; i++) {
       const numbers = Random.pickUniqueNumbersInRange(
-        LOTTO_MIN_NUMBER, LOTTO_MAX_NUMBER, LOTTO_NUMBER_COUNT
+        LOTTO_MIN_NUMBER,
+        LOTTO_MAX_NUMBER,
+        LOTTO_NUMBER_COUNT
       ).sort((a, b) => a - b);
       lottos.push(new Lotto(numbers));
     }
@@ -74,7 +86,7 @@ class App {
 
   // 당첨 결과 계산
   calculateWinningResult(lottos, winningNumbers, bonusNumber) {
-    const result = { FIRST: 0 , SECOND: 0, THIRD: 0, FOURTH: 0, FIFTH: 0 };
+    const result = { FIRST: 0, SECOND: 0, THIRD: 0, FOURTH: 0, FIFTH: 0 };
     for (let lotto of lottos) {
       const match = lotto.countMatches(winningNumbers);
       const hasBonus = lotto.hasBonus(bonusNumber);
@@ -90,7 +102,8 @@ class App {
   // 총 상금 계산
   calculateTotalPrize(result) {
     return Object.entries(result).reduce(
-      (sum, [key, count]) => sum + PRIZE[key] * count, 0
+      (sum, [key, count]) => sum + PRIZE[key] * count,
+      0
     );
   }
 }
