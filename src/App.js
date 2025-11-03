@@ -35,7 +35,7 @@ class App {
     }
 
     Console.print(`${lottoCount}개를 구매했습니다.`);
-    lottos.forEach((lotto) => Console.print(lotto));
+    lottos.forEach((lotto) => Console.print(lotto.toString()));
 
     return lottos;
 
