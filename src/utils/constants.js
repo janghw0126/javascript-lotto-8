@@ -5,11 +5,20 @@ export const LOTTO_MAX_NUMBER = 45;
 
 // 당첨 등수별 상금
 export const PRIZE = {
-  3: 5000,
-  4: 50000,
-  5: 1500000,
-  "5+bonus": 30000000,
-  6: 2000000000,
+  FIFTH: 5000,
+  FOURTH: 50000,
+  THIRD: 1500000,
+  SECOND: 30000000,
+  FIRST: 2000000000,
+};
+
+// 등수 → PRIZE 키 매핑
+export const RANK_MAP = {
+  FIRST: "6개 일치",
+  SECOND: "5개 일치, 보너스 볼 일치",
+  THIRD: "5개 일치",
+  FOURTH: "4개 일치",
+  FIFTH: "3개 일치",
 };
 
 // 사용자 입력 및 에러 메시지 상수
@@ -17,7 +26,7 @@ export const MESSAGE = {
   // 입력 관련 메시지
   INPUT_PURCHASE: "구입금액을 입력해 주세요.\n",
   INPUT_WINNING: "당첨 번호를 입력해 주세요.\n",
-  INPUT_BONUS: "보너스 번호를 입력해 주세요.",
+  INPUT_BONUS: "보너스 번호를 입력해 주세요.\n",
 
   // 에러 메시지
   ERROR_EMPTY: "[ERROR] 빈 값을 입력하였습니다.",

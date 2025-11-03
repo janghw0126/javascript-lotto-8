@@ -8,7 +8,7 @@ import { LOTTO_MIN_NUMBER, LOTTO_MAX_NUMBER, LOTTO_NUMBER_COUNT, LOTTO_PRICE, PR
 class App {
   async run() {
     const purchaseAmount = await this.getPurchaseAmount();
-    
+
     const lottos = this.generateLottos(purchaseAmount);
     OutputView.printLottos(lottos);
 
@@ -20,7 +20,7 @@ class App {
     const totalPrize = this.calculateTotalPrize(result);
     const profitRate = ((totalPrize / purchaseAmount) * 100).toFixed(1);
 
-    OutputView.printResult(result, totalPrize, profitRate);
+    OutputView.printResult(result, profitRate);
   }
 
   // 구입 금액 입력 및 검증
@@ -74,15 +74,15 @@ class App {
 
   // 당첨 결과 계산
   calculateWinningResult(lottos, winningNumbers, bonusNumber) {
-    const result = { 3: 0, 4: 0, 5: 0, "5+bonus": 0, 6: 0 };
+    const result = { FIRST: 0 , SECOND: 0, THIRD: 0, FOURTH: 0, FIFTH: 0 };
     for (let lotto of lottos) {
       const match = lotto.countMatches(winningNumbers);
       const hasBonus = lotto.hasBonus(bonusNumber);
-      if (match === 6) result[6]++;
-      else if (match === 5 && hasBonus) result["5+bonus"]++;
-      else if (match === 5) result[5]++;
-      else if (match === 4) result[4]++;
-      else if (match === 3) result[3]++;
+      if (match === 6) result['FIRST']++;
+      else if (match === 5 && hasBonus) result['SECOND']++;
+      else if (match === 5) result['THIRD']++;
+      else if (match === 4) result['FOURTH']++;
+      else if (match === 3) result['FIFTH']++;
     }
     return result;
   }
