@@ -7,6 +7,8 @@ class App {
     const lottos = this.LottoGenerator(purchaseAmount);
 
     const winningNumbers = await this.readWinningNumbers();
+    const bonusNumber = await this.readbonusNumber();
+    this.calculateWinningResult(lottos,winningNumbers,bonusNumber);
   }
 
 
@@ -108,6 +110,57 @@ class App {
     
     return bonusNumber;
 
+  }
+
+  calculateWinningResult(lottos,winningNumbers,bonusNumber){
+    const result = {
+      3: 0,        
+      4: 0,        
+      5: 0,       
+      "5+bonus": 0, 
+      6: 0,        
+    };
+
+    for (let lotto of lottos) {
+      const lottoNumbers = lotto.getNumbers();
+
+      let matchCount = 0;
+      for (let num of lottoNumbers) {
+        if (winningNumbers.includes(num)) {
+          matchCount++;
+        }
+      }
+
+      const hasBonus = lottoNumbers.includes(bonusNumber);
+
+      if (matchCount === 6) result[6]++;
+      else if (matchCount === 5 && hasBonus) result["5+bonus"]++;
+      else if (matchCount === 5) result[5]++;
+      else if (matchCount === 4) result[4]++;
+      else if (matchCount === 3) result[3]++;
+    }
+    // 결과 출력
+    Console.print("\n당첨 통계\n---");
+
+    // 상금 테이블
+    const PRIZE = {
+      3: 5000,
+      4: 50000,
+      5: 1500000,
+      "5+bonus": 30000000,
+      6: 2000000000,
+    };
+
+    let totalPrize = 0;
+    for (let key in result) {
+      const count = result[key];
+      const prize = PRIZE[key];
+      const label = key === "5+bonus" ? "5개 일치, 보너스 볼 일치" : `${key}개 일치`;
+      Console.print(`${label} (${prize.toLocaleString()}원) - ${count}개`);
+      totalPrize += prize * count;
+    }
+
+    return totalPrize; // 이걸 이용해서 수익률 계산 함수로 넘길 수 있음
   }
 }
 
