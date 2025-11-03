@@ -15,7 +15,7 @@ class Lotto {
     }
   }
 
-  // numbers를 읽는 메서드
+  // numbers 읽는 메서드
   getNumbers() {
     return this.#numbers;
   }
@@ -29,6 +29,7 @@ class Lotto {
   hasBonus(bonusNumber) {
     return this.#numbers.includes(bonusNumber);
   }
+  
   // 로또 번호 배열을 문자열 형태로 표현
   toString(){
     return `[${this.#numbers.join(", ")}]`;

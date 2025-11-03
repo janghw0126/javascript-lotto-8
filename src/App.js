@@ -14,6 +14,7 @@ class App {
     
   }
 
+  // 구입 금액 입력
   async readPurchaseAmount() {
     while (true) {
       try {
@@ -27,6 +28,7 @@ class App {
     }
   }
 
+  // 구입 금액 유효성 검사
   validatePurchaseAmount(input){
     if (input === "") throw new Error("[ERROR] 빈 값을 입력받았습니다.");
     if (isNaN(input)) throw new Error("[ERROR] 숫자가 아닌 문자를 입력 받았습니다.");
@@ -39,6 +41,7 @@ class App {
     return amount;
   }
 
+  // 로또 발행
   LottoGenerator(purchaseAmount){
     const lottoCount = purchaseAmount/1000;
     let lottos = [];
@@ -58,6 +61,7 @@ class App {
 
   }
 
+  // 당첨 번호 입력
   async readWinningNumbers() {
     while (true) {
       try {
@@ -71,6 +75,7 @@ class App {
     }
   }
 
+  // 당첨 번호 유효성 검사
   validateWinningNumbers(input2){
     if(input2=="") throw new Error("[ERROR] 빈 값을 입력하였습니다.");
     if(!input2.includes(",")) throw new Error("[ERROR] 쉼표를 기준으로 구분하지 않았습니다.");
@@ -90,6 +95,7 @@ class App {
     return winningNumbers;
   }
 
+  // 보너스 번호 입력
   async readbonusNumber(winningNumbers){
     while(true){
       try{
@@ -103,6 +109,7 @@ class App {
     }
   }
 
+  // 보너스 번호 유효성 검사
   validateBonusNumber(input3, winningNumbers){
     if (/[^0-9,]/.test(input3)) throw new Error("[ERROR] 숫자가 아닌 문자를 입력하였습니다.");
 
@@ -115,6 +122,7 @@ class App {
 
   }
 
+  // 당첨 결과 계산
   calculateWinningResult(lottos,winningNumbers,bonusNumber){
     const result = {
       3: 0,        
@@ -134,10 +142,9 @@ class App {
       else if (matchCount === 4) result[4]++;
       else if (matchCount === 3) result[3]++;
     }
-    // 결과 출력
+
     Console.print("\n당첨 통계\n---");
 
-    // 상금 테이블
     const PRIZE = {
       3: 5000,
       4: 50000,
@@ -155,9 +162,10 @@ class App {
       totalPrize += prize * count;
     }
 
-    return totalPrize; // 이걸 이용해서 수익률 계산 함수로 넘길 수 있음
+    return totalPrize;
   }
 
+  // 수익률 계산 및 출력
   calculateProfit(purchaseAmount, totalPrize) {
     const profitRate = ((totalPrize / purchaseAmount) * 100).toFixed(1);
     Console.print(`총 수익률은 ${profitRate}%입니다.`);
