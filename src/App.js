@@ -115,7 +115,7 @@ class App {
 
     const bonusNumber = Number(input3);
     if (bonusNumber < 1 || bonusNumber > 45)  throw new Error("[ERROR] 숫자가 1~45 범위를 벗어났습니다.");
-    if (winningNumbers.forEach((num)=> num=== Number(bonusNumber)))
+    if (winningNumbers.some((num) => num === bonusNumber))
       throw new Error("[ERROR] 당첨 번호와 중복되었습니다.");
     
     return bonusNumber;
