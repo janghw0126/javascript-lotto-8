@@ -11,8 +11,8 @@ class App {
     const totalPrize = this.calculateWinningResult(lottos,winningNumbers,bonusNumber);
 
     this.calculateProfit(purchaseAmount, totalPrize);
+    
   }
-
 
   async readPurchaseAmount() {
     while (true) {
@@ -52,6 +52,7 @@ class App {
 
     Console.print(`${lottoCount}개를 구매했습니다.`);
     lottos.forEach((lotto) => Console.print(lotto.toString()));
+    Console.print("");
 
     return lottos;
 
@@ -61,6 +62,7 @@ class App {
     while (true) {
       try {
         const input2 = await Console.readLineAsync("당첨 번호를 입력해 주세요.\n");
+        Console.print("");
         const winningNumbers = this.validateWinningNumbers(input2);
         return winningNumbers; 
       } catch (error) {
@@ -68,7 +70,6 @@ class App {
       }
     }
   }
-
 
   validateWinningNumbers(input2){
     if(input2=="") throw new Error("[ERROR] 빈 값을 입력하였습니다.");
@@ -159,7 +160,7 @@ class App {
 
   calculateProfit(purchaseAmount, totalPrize) {
     const profitRate = ((totalPrize / purchaseAmount) * 100).toFixed(2);
-    Console.print(`\n총 수익률은 ${profitRate}%입니다.`);
+    Console.print(`총 수익률은 ${profitRate}%입니다.`);
   }
 
 }
