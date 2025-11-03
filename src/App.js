@@ -4,7 +4,7 @@ import Lotto from "./Lotto.js";
 class App {
   async run() {
     const purchaseAmount = await this.readPurchaseAmount();
-    const lottos = this.LottoGenerator(purchaseAmount);
+    const lottos = this.generateLottos(purchaseAmount);
 
     const winningNumbers = await this.readWinningNumbers();
     const bonusNumber = await this.readbonusNumber(winningNumbers);
@@ -42,7 +42,7 @@ class App {
   }
 
   // 로또 발행
-  LottoGenerator(purchaseAmount){
+  generateLottos(purchaseAmount){
     const lottoCount = purchaseAmount/1000;
     let lottos = [];
 
