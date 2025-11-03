@@ -14,7 +14,7 @@ describe("로또 유효성 검증 테스트", () => {
       [
         "숫자가 아닌 문자로 입력받았을 경우",
         "eight-thousand",
-        "[ERROR] 숫자가 아닌 문자를 입력 받았습니다.",
+        "[ERROR] 숫자가 아닌 문자를 입력하였습니다.",
       ],
       [
         "0 이하인 경우",
@@ -24,7 +24,7 @@ describe("로또 유효성 검증 테스트", () => {
       [
         "빈 값 입력 시",
         "",
-        "[ERROR] 빈 값을 입력받았습니다.",
+        "[ERROR] 빈 값을 입력하였습니다.",
       ],
     ])("%s 예외 발생", (_, input, expectedMessage) => {
       expect(() => app.validatePurchaseAmount(input)).toThrow(expectedMessage);
