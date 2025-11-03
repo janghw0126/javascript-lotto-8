@@ -122,16 +122,8 @@ class App {
     };
 
     for (let lotto of lottos) {
-      const lottoNumbers = lotto.getNumbers();
-
-      let matchCount = 0;
-      for (let num of lottoNumbers) {
-        if (winningNumbers.includes(num)) {
-          matchCount++;
-        }
-      }
-
-      const hasBonus = lottoNumbers.includes(bonusNumber);
+      const matchCount = lotto.countMatches(winningNumbers);
+      const hasBonus = lotto.hasBonus(bonusNumber);
 
       if (matchCount === 6) result[6]++;
       else if (matchCount === 5 && hasBonus) result["5+bonus"]++;
