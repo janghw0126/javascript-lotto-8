@@ -3,22 +3,22 @@ import Lotto from "./Lotto.js";
 
 class App {
   async run() {
-    while(true){
-      try{
-         const input = await Console.readLineAsync( "구입금액을 입력해 주세요.\n");
-         Console.print("");
+    const purchaseAmount = await this.readPurchaseAmount();
+    const lottos = this.LottoGenerator(purchaseAmount);
 
-         const purchaseAmount = this.validatePurchaseAmount(input);
-         const lottos = this.LottoGenerator(purchaseAmount);
-         Console.print("");
-
-         const input2 = await Console.readLineAsync( "당첨 번호를 입력해 주세요.\n");
-         const winningNumbers = this.validateWinningNumbers(input2);
+    const winningNumbers = await this.readWinningNumbers();
+      
+  }
 
 
-
-
-      }catch(error){
+  async readPurchaseAmount() {
+    while (true) {
+      try {
+        const input = await Console.readLineAsync("구입금액을 입력해 주세요.\n");
+        const purchaseAmount = this.validatePurchaseAmount(input);
+        Console.print("");
+        return purchaseAmount;
+      } catch (error) {
         Console.print(error.message);
       }
     }
@@ -50,6 +50,19 @@ class App {
     return lottos;
 
   }
+
+  async readWinningNumbers() {
+    while (true) {
+      try {
+        const input2 = await Console.readLineAsync("당첨 번호를 입력해 주세요.\n");
+        const winningNumbers = this.validateWinningNumbers(input2);
+        return winningNumbers; 
+      } catch (error) {
+        Console.print(error.message);
+      }
+    }
+  }
+
 
   validateWinningNumbers(input2){
     if(input2=="") throw new Error("[ERROR] 빈 값을 입력하였습니다.");
